@@ -2,8 +2,8 @@ const TaskModal = require("../models/TasksModel");
 
 const getAllTasks = async (req, res) => {
   try {
-    const task = await TaskModal.find({});
-    res.status(200).json({ task });
+    const tasks = await TaskModal.find({});
+    res.status(200).json({ tasks });
   } catch (err) {
     res.status(500).json({ msg: err });
   }
@@ -38,7 +38,7 @@ const updateTask = async (req, res) => {
   const { id: taskID } = req.params;
   const { name, completed } = req.body;
   try {
-    const updatedValue = await TaskModal.findOneAndUpdate(
+    const task = await TaskModal.findOneAndUpdate(
       {
         _id: taskID,
       },
@@ -52,11 +52,11 @@ const updateTask = async (req, res) => {
       }
     );
 
-    if (!updatedValue) {
+    if (!task) {
       res.status(404).json({ msg: `No task was found with ID: ${taskID}` });
     }
 
-    res.status(200).json({ data: updatedValue });
+    res.status(200).json({ task });
   } catch (err) {
     res.status(500).json({ msg: err });
   }

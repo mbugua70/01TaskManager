@@ -34,15 +34,16 @@ editFormDOM.addEventListener('submit', async (e) => {
   try {
     const taskName = taskNameDOM.value
     const taskCompleted = taskCompletedDOM.checked
+    console.log(id);
 
     const {
       data: { task },
     } = await axios.patch(`/api/v1/tasks/${id}`, {
       name: taskName,
       completed: taskCompleted,
-    })
+    });
 
-    const { _id: taskID, completed, name } = task
+    const { _id: taskID, completed, name } = task;
 
     taskIDDOM.textContent = taskID
     taskNameDOM.value = name
